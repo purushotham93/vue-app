@@ -1,13 +1,19 @@
 <template>
-  <div class="hello">Test</div>
+  <div class="hello">
+    <BarChart></BarChart>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
 import { LatestStats } from '../models/summary';
-
-@Component
+import BarChart from './BarChart.vue';
+@Component({
+  components: {
+    BarChart,
+  },
+})
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 

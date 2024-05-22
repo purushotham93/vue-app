@@ -23,7 +23,7 @@ export default new Vuex.Store({
       Object.assign(state, getDefaultState());
     },
     setLatestStats(state: State, data: LatestStats) {
-      Vue.set(state, 'latestState', data || {});
+      Vue.set(state, 'latestStats', data || {});
     },
   },
   actions: {
