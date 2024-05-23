@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-    <BarChart></BarChart>
+  <div class="charts-container">
+    <BarChart :stats-data="latestStats"></BarChart>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import BarChart from './BarChart.vue';
     BarChart,
   },
 })
-export default class HelloWorld extends Vue {
+export default class MainComponent extends Vue {
   @Prop() private msg!: string;
 
   @Action
