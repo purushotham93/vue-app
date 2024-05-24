@@ -31,7 +31,39 @@ interface Summary {
     regional: Array<Regional>;
     lastRefreshed: Date;
     lastOriginUpdate: Date;
+}
+
+
+interface HospitalSource {
+  lastUpdated: Date;
+  url: string;
+}
+
+  interface HospitalRegion {
+    state: string;
+    ruralHospitals: number,
+    ruralBeds: number,
+    urbanHospitals: number;
+    urbanBeds: number;
+    totalHospitals: number;
+    totalBeds: number;
+    asOn: Date;
+  }
+
+  interface HospitalSummary {
+    ruralHospitals: number,
+        ruralBeds: number,
+        urbanHospitals: number;
+        urbanBeds: number;
+        totalHospitals: number;
+        totalBeds: number;
   }
   
-  export { Summary, UnOfficialSummary, Regional, LatestStats };
+  interface HospitalStats {
+    summary: HospitalSummary;
+    regional: Array<HospitalRegion>;
+    sources: Array<HospitalSource>;
+}
+
+  export { Summary, UnOfficialSummary, Regional, LatestStats, HospitalStats, HospitalRegion};
   

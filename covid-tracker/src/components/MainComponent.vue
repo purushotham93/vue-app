@@ -1,50 +1,81 @@
 <template>
   <div class="charts-container">
-    <BarChart :stats-data="latestStats"></BarChart>
+    <template v-if="!hasError">
+      <BarChart
+        :stats-data="latestStats"
+        title="Latest Covid Cases"
+        containerClass="chart-container"
+      ></BarChart>
+      <DoughnutChart
+        :stats-data="latestStats"
+        containerClass="chart-container"
+        title="Discharged Cases"
+      ></DoughnutChart>
+      <LineChart
+        :hospital-data="hospitalData"
+        title="Hospitals"
+        containerClass="chart-container"
+      ></LineChart>
+    </template>
+    <div class="error-message" v-show="hasError">
+      Issue on rendering charts... Please try again.
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import { Action, State } from 'vuex-class';
-import { LatestStats } from '../models/summary';
+import { LatestStats, HospitalStats } from '../models/summary';
 import BarChart from './BarChart.vue';
+import DoughnutChart from './DoughnutChart.vue';
+import LineChart from './LineChart.vue';
+
 @Component({
   components: {
     BarChart,
+    DoughnutChart,
+    LineChart,
   },
 })
 export default class MainComponent extends Vue {
-  @Prop() private msg!: string;
-
   @Action
   getLatestCovidStats!: () => void;
+
+  @Action
+  getHospitalInfo!: () => void;
 
   @State
   latestStats!: LatestStats;
 
+  @State
+  hospitalData!: HospitalStats;
+
+  hasError = false;
+
   async mounted() {
-    console.log('nounted');
-    await this.getLatestCovidStats();
-    console.log(this.latestStats);
+    try {
+      await this.getLatestCovidStats();
+      await this.getHospitalInfo();
+    } catch (error) {
+      console.log('error');
+      this.hasError = true;
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.charts-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  position: relative;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.error-message {
+  margin: 0 auto;
+  padding: 0 20px;
 }
 </style>

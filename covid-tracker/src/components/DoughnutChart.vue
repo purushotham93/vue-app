@@ -1,33 +1,30 @@
 <template>
   <div :class="containerClass">
     <template v-if="showChart">
-      <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+      <Doughnut
+        id="my-doughnut-chart-id"
+        :options="chartOptions"
+        :data="chartData"
+      />
     </template>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { Bar } from 'vue-chartjs';
+import { Doughnut } from 'vue-chartjs';
 import {
   Chart as ChartJS,
   ChartData,
-  ChartOptions,
   Title,
   Tooltip,
   Legend,
-  BarElement,
+  ArcElement,
   CategoryScale,
-  LinearScale,
+  ChartOptions,
+  Colors,
 } from 'chart.js';
 
-ChartJS.register(
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-);
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, Colors);
 import { LatestStats, Regional } from '../models/summary';
 
 interface CovidData {
@@ -37,10 +34,10 @@ interface CovidData {
 }
 @Component({
   components: {
-    Bar,
+    Doughnut,
   },
 })
-export default class BarChart extends Vue {
+export default class DoughnutChart extends Vue {
   @Prop()
   statsData!: LatestStats;
 
@@ -52,10 +49,14 @@ export default class BarChart extends Vue {
 
   showChart = false;
 
-  chartData: ChartData<'bar', number[], unknown> = {
+  chartData: ChartData<'doughnut', number[], unknown> = {
     datasets: [],
   };
   chartOptions: ChartOptions = {};
+
+  mounted() {
+    console.log('this', this.statsData);
+  }
 
   displayChart() {
     const regions = this.statsData?.regional?.map((data: Regional) => data.loc);
@@ -71,15 +72,10 @@ export default class BarChart extends Vue {
     const discharged = covidData?.map((data: CovidData) => data.discharged);
 
     this.chartData.labels = covidData.map((data) => data.loc);
+    console.log('chartData', this.chartData);
     this.chartData.datasets = [
       {
-        label: 'Total Confirmed',
-        backgroundColor: '#f87979',
-        data: totalConfirmed,
-      },
-      {
         label: 'Total Discharged',
-        backgroundColor: 'black',
         data: discharged,
       },
     ];
@@ -87,6 +83,9 @@ export default class BarChart extends Vue {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
+        legend: {
+          position: 'right',
+        },
         title: {
           display: true,
           text: this.title,
