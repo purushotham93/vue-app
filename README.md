@@ -1,4 +1,4 @@
-# covid-tracker
+![image](https://github.com/purushotham93/vue-app/assets/62345144/c178b551-bc9d-4029-9702-b9cd38e3e3e8)# covid-tracker
 
 This is a covid tracker application to visualize the covid statistics using Charts js
 
@@ -16,7 +16,9 @@ Vue, Node, Chart.js
 
 3.Line Chart
 
-![Uploading image.png…]()
+![image](https://github.com/purushotham93/vue-app/assets/62345144/6c951201-d240-4899-8f93-f37286138874)
+
+
 
 
 ## Project setup
