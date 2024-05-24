@@ -1,4 +1,4 @@
-![image](https://github.com/purushotham93/vue-app/assets/62345144/c178b551-bc9d-4029-9702-b9cd38e3e3e8)# covid-tracker
+# covid-tracker
 
 This is a covid tracker application to visualize the covid statistics using Charts js
 
@@ -12,6 +12,7 @@ Vue, Node, Chart.js
 
 2.Dougnut Chart
 
+![image](https://github.com/purushotham93/vue-app/assets/62345144/1fb664c8-be8f-4be2-83e7-7fa5f7bc8dd0)
 
 
 3.Line Chart
